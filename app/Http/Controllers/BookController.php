@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Services\SearchService;
 
 class BookController extends Controller
 {
@@ -13,13 +14,12 @@ class BookController extends Controller
         return view('books', compact('books'));
     }
 
-    public function search(Request $request)
-    {
-        $books = Book::where('title','like','%'.$request->q.'%')
-                    ->orWhere('author','like','%'.$request->q.'%')
-                    ->get();
-        return view('books', compact('books'));
+    // SearchHistory + Book (Models)
+    public function search(Request $r, SearchService $service){
+        $books = $service->search($r->q);
+        return view('books',compact('books'));
     }
+
 }
 
 
