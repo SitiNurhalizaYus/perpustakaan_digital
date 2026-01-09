@@ -1,24 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Menu Utama</title>
-    @vite('resources/css/app.css')
-</head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+@extends('layouts.app')
 
-<div class="bg-white p-8 rounded shadow w-96">
-    <h2 class="text-xl font-bold text-center mb-6">
-        Perpustakaan Digital
+@section('content')
+<div class="text-center mt-5">
+
+    <h2 class="mb-3">
+        <i class="bi bi-book"></i> Sistem Perpustakaan Digital Universitas
     </h2>
 
-    <div class="space-y-3">
-        <a href="/books" class="block bg-blue-600 text-white p-3 rounded text-center">Daftar Buku</a>
-        <a href="/books" class="block bg-indigo-600 text-white p-3 rounded text-center">Cari Buku</a>
-        <a href="/my-loans" class="block bg-green-600 text-white p-3 rounded text-center">Pinjaman Saya</a>
-        <a href="#" class="block bg-gray-400 text-white p-3 rounded text-center">Rekomendasi</a>
-        <a href="#" class="block bg-yellow-500 text-white p-3 rounded text-center">Dashboard Versi</a>
-    </div>
-</div>
+    <p class="lead">
+        Sistem ini digunakan untuk mengelola data buku, peminjaman, dan pencarian
+        pada Perpustakaan Digital Universitas.
+    </p>
 
-</body>
-</html>
+    <hr>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5><i class="bi bi-journal-text"></i> Data Buku</h5>
+                    <p>Melihat dan mencari koleksi buku.</p>
+                    <a href="/books" class="btn btn-primary btn-sm">Lihat</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5><i class="bi bi-box-arrow-in-down"></i> Data Peminjaman</h5>
+                    <p>Melihat dan mengelola peminjaman buku.</p>
+                    <a href="/my-loans" class="btn btn-success btn-sm">Lihat</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5><i class="bi bi-stars"></i> Rekomendasi</h5>
+                    <p>Melihat buku yang direkomendasikan.</p>
+                    <a href="#" class="btn btn-secondary btn-sm">Lihat</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@endsection
