@@ -17,11 +17,24 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+     use HasFactory, Notifiable;
+
     protected $fillable = [
+        'nim',
         'name',
-        'email',
-        'password',
+        'faculty'
     ];
+
+    public function loans()
+    {
+        return $this->hasMany(Loan::class);
+    }
+    // protected $fillable = [
+    //     'name',
+    //     'email',
+    //     'password',
+    // ];
 
     /**
      * The attributes that should be hidden for serialization.
