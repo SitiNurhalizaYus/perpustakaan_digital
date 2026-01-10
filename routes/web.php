@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoanController;
 use App\Services\RecommendationService;
+use App\Http\Controllers\AcademicController;
 
 Route::get('/', function(){
     return view('home');
@@ -11,7 +12,7 @@ Route::get('/', function(){
 
 Route::get('/books', [BookController::class,'index']);
 Route::get('/search', [BookController::class,'search']);
-Route::get('/borrow/{id}', [LoanController::class,'borrow']);
+Route::post('/borrow/{id}', [LoanController::class,'borrow']);
 Route::get('/return/{id}', [LoanController::class,'returnBook']);
 Route::get('/loans', [LoanController::class,'myLoans']);
 
@@ -28,5 +29,9 @@ Route::get('/dashboard', function(){
   'transactions'=>\App\Models\Loan::count()
  ]);
 });
+
+
+Route::get('/sync-academic', [AcademicController::class, 'sync']);
+
 
 

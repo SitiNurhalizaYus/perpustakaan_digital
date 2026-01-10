@@ -7,35 +7,45 @@ use App\Models\User;
 
 class AcademicService
 {
-    protected string $apiUrl = 'http://localhost:8001/api/students';
-
-    public function verifyStudent(string $nim, string $name, string $faculty)
+    public function syncStudents()
     {
-        $response = Http::get($this->apiUrl);
-
-        if ($response->failed()) {
-            return null; // API mati
-        }
+        $response = Http::get('http://localhost:8001/api/students');
 
         $students = $response->json();
 
         foreach ($students as $student) {
-            if (
-                $student['nim'] === $nim &&
-                strtolower($student['name']) === strtolower($name) &&
-                strtolower($student['faculty']) === strtolower($faculty)
-            ) {
-                // valid → simpan/update di tabel users
-                return User::updateOrCreate(
-                    ['nim' => $nim],
-                    [
-                        'name' => $name,
-                        'faculty' => $faculty
-                    ]
-                );
-            }
+            User::updateOrCreate(
+                ['nim' => $student['nim']],
+                [
+                    'name' => $student['name'],
+                    'faculty' => $student['faculty']
+                ]
+            );
         }
-
-        return null; // tidak ditemukan di SIAKAD
     }
+
+    public function findByNim($nim)
+    {
+        return User::where('nim', $nim)->first();
+    }
+
+    public function findStudentByNim($nim)
+{
+    $students = $this->getStudents();
+
+    foreach ($students as $student) {
+        if ($student['nim'] == $nim) {
+            return $student;
+        }
+    }
+
+    return null;
+}
+public function getStudents()
+{
+    $response = Http::get('http://localhost:8001/api/students');
+    return $response->json();
+}
+
+
 }
