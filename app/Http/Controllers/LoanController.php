@@ -41,44 +41,38 @@ class LoanController extends Controller
     }
 
     public function borrow(Request $request, $id)
-    {
-        $request->validate([
-            'nim' => 'required'
-        ]);
+{
+    $request->validate([
+        'nim' => 'required'
+    ]);
 
-        $user = User::where('nim', $request->nim)->first();
+    $user = User::where('nim', $request->nim)->first();
 
-        if (!$user) {
-            return back()->with('error','NIM tidak ditemukan di sistem akademik');
-        }
-
-        $book = Book::findOrFail($id);
-
-        if ($book->stock <= 0) {
-            return back()->with('error','Stok habis');
-        }
-
-        // 🚫 CEGAH PINJAM GANDA
-        $existingLoan = Loan::where('book_id', $id)
-            ->where('user_id', $user->id)
-            ->where('status', 'borrowed')
-            ->first();
-
-        if ($existingLoan) {
-            return back()->with('error', 'Mahasiswa ini masih meminjam buku ini.');
-        }
-
-        Loan::create([
-            'book_id' => $id,
-            'user_id' => $user->id,
-            'loan_date' => now(),
-            'status' => 'borrowed'
-        ]);
-
-        $book->decrement('stock');
-
-        return back()->with('success','Buku berhasil dipinjam oleh '.$user->name);
+    if (!$user) {
+        return response('NIM not found', 422);
     }
+
+    $book = Book::findOrFail($id);
+
+    if ($book->stock <= 0) {
+        return response('Out of stock', 422);
+    }
+
+    Loan::create([
+        'book_id' => $book->id,
+        'user_id' => $user->id,
+        'loan_date' => now(),
+        'status' => 'borrowed'
+    ]);
+
+    // INI HARUS ADA
+    $book->stock = $book->stock - 1;
+    $book->save();
+
+    return response('OK', 200);
+}
+
+
 
 
 

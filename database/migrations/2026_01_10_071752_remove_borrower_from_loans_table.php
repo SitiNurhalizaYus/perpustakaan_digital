@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -7,20 +8,14 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('loans', function (Blueprint $table) {
-            $table->foreignId('user_id')
-                ->nullable()
-                ->after('book_id');
+            $table->dropColumn('borrower');
         });
-
     }
 
     public function down()
     {
         Schema::table('loans', function (Blueprint $table) {
-            $table->dropColumn('borrower');
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
+            $table->string('borrower')->nullable();
         });
     }
 };
-
