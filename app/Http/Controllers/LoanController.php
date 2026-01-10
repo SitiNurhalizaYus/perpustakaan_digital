@@ -49,13 +49,23 @@ class LoanController extends Controller
         $user = User::where('nim', $request->nim)->first();
 
         if (!$user) {
-            return back()->with('error','NIM tidak terdaftar di sistem akademik');
+            return back()->with('error','NIM tidak ditemukan di sistem akademik');
         }
 
         $book = Book::findOrFail($id);
 
         if ($book->stock <= 0) {
             return back()->with('error','Stok habis');
+        }
+
+        // 🚫 CEGAH PINJAM GANDA
+        $existingLoan = Loan::where('book_id', $id)
+            ->where('user_id', $user->id)
+            ->where('status', 'borrowed')
+            ->first();
+
+        if ($existingLoan) {
+            return back()->with('error', 'Mahasiswa ini masih meminjam buku ini.');
         }
 
         Loan::create([
@@ -67,8 +77,9 @@ class LoanController extends Controller
 
         $book->decrement('stock');
 
-        return back()->with('success','Buku dipinjam oleh '.$user->name);
+        return back()->with('success','Buku berhasil dipinjam oleh '.$user->name);
     }
+
 
 
 }

@@ -36,7 +36,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link text-grey disabled">
+                <a class="nav-link text-white" href="/recommendations">
                     <i class="bi bi-stars"></i> Rekomendasi
                 </a>
             </li>
