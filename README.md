@@ -1,3 +1,120 @@
+# Perpustakaan Digital Universitas  
+Mini Project – Konstruksi dan Evolusi Perangkat Lunak
+
+Halo!  
+Project ini adalah mini project yang saya bangun untuk mata kuliah **Konstruksi dan Evolusi Perangkat Lunak**.  
+Melalui project ini, saya mencoba mensimulasikan bagaimana sebuah sistem perangkat lunak tidak hanya dibuat sekali, tetapi **dikembangkan dan berevolusi** seiring bertambahnya kebutuhan.
+
+Studi kasus yang digunakan adalah **Sistem Perpustakaan Digital Universitas**.
+
+---
+
+## Apa yang dilakukan sistem ini?
+
+Sistem ini dibuat untuk membantu aktivitas di perpustakaan kampus, seperti:
+- Mencari buku
+- Meminjam dan mengembalikan buku
+- Mengelola data mahasiswa
+- Memberikan rekomendasi buku
+- Menampilkan ringkasan data dalam dashboard
+
+Sistem ini berkembang dari versi sederhana menjadi sistem yang lebih kompleks dan terintegrasi.
+
+---
+
+## Versi 1 – Sistem Awal
+
+Pada versi pertama, sistem ini masih sederhana.  
+Fitur yang tersedia:
+- Daftar buku
+- Pencarian buku berdasarkan judul dan penulis
+- Peminjaman buku
+- Pengembalian buku
+
+Pada tahap ini, sistem belum mengenal identitas mahasiswa.  
+Setiap peminjaman hanya dicatat sebagai teks biasa (`borrower`).  
+Versi ini menggambarkan **sistem awal yang fungsional tetapi masih terbatas**.
+
+---
+
+## Versi 2 – Sistem Berevolusi
+
+Pada versi kedua, sistem mulai dikembangkan menjadi lebih realistis seperti sistem di kampus sungguhan.
+
+Perubahan yang dilakukan:
+- Sistem sekarang memiliki data **mahasiswa** (tabel `users`)
+- Data mahasiswa diambil dari **Sistem Akademik Kampus (SIAKAD)** melalui API
+- Peminjaman sekarang terhubung ke mahasiswa melalui `user_id`
+- Sistem menyimpan **riwayat pencarian**
+- Sistem menampilkan **rekomendasi buku**
+- Ditambahkan **dashboard** untuk melihat ringkasan data
+
+Kolom lama `borrower` dihapus dan digantikan dengan relasi ke data mahasiswa.
+
+---
+
+## Integrasi dengan Sistem Akademik
+
+Untuk mensimulasikan sistem kampus, dibuat sebuah API sederhana bernama:
+
+mock_academic_api
+
+akses sitem -> https://github.com/SitiNurhalizaYus/mock_academic_api.git
+
+API ini menyediakan data mahasiswa melalui endpoint:
+http://localhost:8001/api/students
+
+Data mahasiswa dapat disinkronkan ke sistem perpustakaan melalui:
+http://localhost:8000/sync-academic
+
+Dengan ini, sistem perpustakaan benar-benar terhubung ke sistem akademik (walaupun masih dalam bentuk simulasi).
+
+---
+
+## Pengujian (Regression Test)
+
+Setelah sistem berevolusi, dilakukan **pengujian regresi** menggunakan PHPUnit untuk memastikan bahwa fitur lama tetap berjalan.
+
+Fitur yang diuji:
+- Pencarian buku
+- Peminjaman buku
+- Pengembalian buku
+- Integrasi data mahasiswa
+- Rekomendasi buku
+
+Semua test dijalankan dengan:
+php artisan test
+
+Hasilnya seluruh test **PASS**, yang berarti evolusi sistem tidak merusak fungsi lama.
+
+---
+
+## Teknologi yang Digunakan
+
+- Laravel
+- MySQL
+- Bootstrap
+- REST API
+- PHPUnit
+
+---
+
+## Kesimpulan
+
+Melalui project ini, saya belajar bahwa:
+- Sistem tidak berhenti di versi pertama
+- Perubahan pada database dan arsitektur sangat berpengaruh
+- Testing sangat penting saat sistem berevolusi
+
+Project ini bukan hanya CRUD buku, tetapi simulasi **sistem informasi perpustakaan yang terintegrasi dengan sistem akademik kampus**.
+
+---
+
+
+# Mini Project – Konstruksi dan Evolusi Perangkat Lunak
+Siti Nurhaliza Yus 2511089003
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
